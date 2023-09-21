@@ -28,22 +28,22 @@ public class Employee implements Serializable {
 	private Long id;
 	
 	@NotBlank
-	@Pattern(regexp = "^[A-Z]+(.)*")
+	@Pattern(regexp = "^[A-Z]+(.)*", message = "Por favor, informe dados válidos.")
 	private String name;
 	
-	@CPF
+	@CPF(message = "Campo inválido!")
 	private String cpf;
 	
-	@NotBlank
+	@NotBlank(message = "Campo não informado! Por favor, informe dados válidos.")
 	private String office;
 	
-	@NotBlank
+	@NotBlank(message = "Campo não informado! Por favor, informe dados válidos.")
 	private String gender;
 	
 	@JsonFormat(pattern = "dd/MM/yyyy") 
 	private LocalDate birthDate;
 
-	@NotNull
+	@NotNull(message = "Campo inválido! Por favor, informe um status válido [ATIVO, INATIVO, EM_TREINAMENTO")
 	private Status status;
 	
 	public Employee() {
