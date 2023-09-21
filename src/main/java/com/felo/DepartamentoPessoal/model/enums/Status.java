@@ -3,7 +3,7 @@ package com.felo.DepartamentoPessoal.model.enums;
 public enum Status {
 	
 	ATIVO,
-	INTATIVO,
+	INATIVO,
 	EM_TREINAMENTO
 
 }

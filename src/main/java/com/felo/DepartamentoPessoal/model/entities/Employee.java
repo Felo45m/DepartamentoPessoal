@@ -1,8 +1,12 @@
 package com.felo.DepartamentoPessoal.model.entities;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Objects;
 
+import org.hibernate.validator.constraints.br.CPF;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.felo.DepartamentoPessoal.model.enums.Status;
 
 import jakarta.persistence.Entity;
@@ -10,6 +14,9 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 
 @Entity
 @Table(name="TB_EMPLOYEE")
@@ -19,118 +26,101 @@ public class Employee implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-	private String nome;
-	private Double cpf;
-	private String endereco;
-	private String cargo;
-	private String sexo;
-	private int idade;
-	private Status status;
 	
+	@NotBlank
+	@Pattern(regexp = "^[A-Z]+(.)*")
+	private String name;
+	
+	@CPF
+	private String cpf;
+	
+	@NotBlank
+	private String office;
+	
+	@NotBlank
+	private String gender;
+	
+	@JsonFormat(pattern = "dd/MM/yyyy") 
+	private LocalDate birthDate;
+
+	@NotNull
+	private Status status;
 	
 	public Employee() {
 		
 	}
 
-
-	public Employee(Long id, String nome, Double cpf, String endereco, String cargo, String sexo, int idade, Status status) {
+	public Employee(Long id, String name, String cpf, String office, String gender, LocalDate birthDate, Status status) {
 		super();
 		this.id = id;
-		this.nome = nome;
+		this.name = name;
 		this.cpf = cpf;
-		this.endereco = endereco;
-		this.cargo = cargo;
-		this.sexo = sexo;
-		this.idade = idade;
+		this.office = office;
+		this.gender = gender;
+		this.birthDate = birthDate;
 		this.status = status;
 	}
-
 
 	public Long getId() {
 		return id;
 	}
 
-
 	public void setId(Long id) {
 		this.id = id;
 	}
 
-
-	public String getNome() {
-		return nome;
+	public String getName() {
+		return name;
 	}
 
-
-	public void setNome(String nome) {
-		this.nome = nome;
+	public void setName(String name) {
+		this.name = name;
 	}
 
-
-	public Double getCpf() {
+	public String getCpf() {
 		return cpf;
 	}
 
-
-	public void setCpf(Double cpf) {
+	public void setCpf(String cpf) {
 		this.cpf = cpf;
 	}
 
-
-	public String getEndereco() {
-		return endereco;
+	public String getOffice() {
+		return office;
 	}
 
-
-	public void setEndereco(String endereco) {
-		this.endereco = endereco;
+	public void setOffice(String office) {
+		this.office = office;
 	}
 
-
-	public String getCargo() {
-		return cargo;
+	public String getGender() {
+		return gender;
 	}
 
-
-	public void setCargo(String cargo) {
-		this.cargo = cargo;
+	public void setGender(String gender) {
+		this.gender = gender;
 	}
 
-
-	public String getSexo() {
-		return sexo;
+	public LocalDate getBirthDate() {
+		return birthDate;
 	}
 
-
-	public void setSexo(String sexo) {
-		this.sexo = sexo;
+	public void setBirthDate(LocalDate birthDate) {
+		this.birthDate = birthDate;
 	}
-
-
-	public int getIdade() {
-		return idade;
-	}
-
-
-	public void setIdade(int idade) {
-		this.idade = idade;
-	}
-
 
 	public Status getStatus() {
 		return status;
 	}
 
-
 	public void setStatus(Status status) {
 		this.status = status;
 	}
-
 
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);
 	}
-
 
 	@Override
 	public boolean equals(Object obj) {
