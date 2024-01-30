@@ -59,7 +59,7 @@ public class EmployeeService {
 	private void updateData(Employee entity, Employee employee) {
 		entity.setName(employee.getName());
 		entity.setCpf(employee.getCpf());
-		entity.setBirthDate(employee.getBirthDate());
+		entity.setAge(employee.getAge());
 		entity.setGender(employee.getGender());
 		entity.setOffice(employee.getOffice());
 		entity.setStatus(employee.getStatus());
