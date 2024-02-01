@@ -5,6 +5,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
 
+import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -13,12 +14,6 @@ import org.hibernate.validator.constraints.br.CPF;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.felo.DepartamentoPessoal.model.enums.Status;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-
 @Setter
 @Getter
 @Entity
@@ -26,9 +21,10 @@ import jakarta.persistence.Table;
 public class Employee implements Serializable {
 	@Serial
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "employee_seq")
+	@SequenceGenerator(name = "employee_seq", sequenceName = "tb_employee_SEQ", allocationSize = 1)
 	private Long id;
 	
 	@NotBlank
@@ -56,8 +52,7 @@ public class Employee implements Serializable {
 		
 	}
 
-	public Employee(Long id, String name, String cpf, String office, String gender, Integer age, Status status) {
-		this.id = id;
+	public Employee(String name, String cpf, String office, String gender, Integer age, Status status) {
 		this.name = name;
 		this.cpf = cpf;
 		this.office = office;

@@ -28,7 +28,7 @@ import com.felo.DepartamentoPessoal.services.EmployeeService;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping(value = "/api/funcionarios/")
+@RequestMapping(value = "/funcionarios/")
 public class EmployeeResource {
 	
 	@Autowired
