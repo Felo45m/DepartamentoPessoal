@@ -1,18 +1,18 @@
 package com.felo.DepartamentoPessoal.services;
 
-import java.util.List;
-import java.util.Optional;
+import com.felo.DepartamentoPessoal.model.entities.Employee;
+import com.felo.DepartamentoPessoal.repository.EmployeeRepository;
+import com.felo.DepartamentoPessoal.services.exceptions.DatabaseException;
+import com.felo.DepartamentoPessoal.services.exceptions.ObjectNotFoundException;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
-import com.felo.DepartamentoPessoal.model.entities.Employee;
-import com.felo.DepartamentoPessoal.repository.EmployeeRepository;
-import com.felo.DepartamentoPessoal.services.exceptions.DatabaseException;
-import com.felo.DepartamentoPessoal.services.exceptions.ObjectNotFoundException;
-
-import jakarta.persistence.EntityNotFoundException;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class EmployeeService {
@@ -24,8 +24,8 @@ public class EmployeeService {
 		return employeeRepository.findAll();
 	}
 	
-	public Employee findById(Long id) {
-		Optional<Employee> employee = employeeRepository.findById(id);
+	public Employee findById(UUID employeeId) {
+		Optional<Employee> employee = employeeRepository.findById(employeeId);
 		return employee.orElseThrow(() -> new ObjectNotFoundException(null));
 	}
 	
@@ -33,26 +33,26 @@ public class EmployeeService {
 		return employeeRepository.save(employee);
 	}
 	
-	public void deleteEmployee(Long id) {
+	public void deleteEmployee(UUID employeeId) {
 		try {
-			employeeRepository.deleteById(id);
+			employeeRepository.deleteById(employeeId);
 		}
 		catch (EmptyResultDataAccessException e) {
-			throw new ObjectNotFoundException(id);
+			throw new ObjectNotFoundException(employeeId);
 		}
 		catch (DataIntegrityViolationException e) {
 			throw new DatabaseException(e.getMessage());
 		}
 	}
 	
-	public Employee updateEmployee(Long id, Employee employee) {
+	public Employee updateEmployee(UUID employeeId, Employee employee) {
 		try {
-			Employee entity = employeeRepository.getReferenceById(id);
+			Employee entity = employeeRepository.getReferenceById(employeeId);
 			updateData(entity, employee);
 			return employeeRepository.save(entity);
 		}
 		catch (EntityNotFoundException e) {
-			throw new ObjectNotFoundException(id);
+			throw new ObjectNotFoundException(employeeId);
 		}
 	}
 	

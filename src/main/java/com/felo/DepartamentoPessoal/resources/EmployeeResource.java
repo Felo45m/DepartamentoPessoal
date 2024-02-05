@@ -4,6 +4,7 @@ import java.net.URI;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -54,28 +55,28 @@ public class EmployeeResource {
 		return ResponseEntity.ok().body(List);
 	}
 	
-	@GetMapping(value = "/{id}")
-	public ResponseEntity<Employee> findById(@PathVariable Long id) {
-		Employee client = employeeService.findById(id);
+	@GetMapping(value = "/{employeeId}")
+	public ResponseEntity<Employee> findById(@PathVariable UUID employeeId) {
+		Employee client = employeeService.findById(employeeId);
 		return ResponseEntity.ok().body(client);
 	}
 	
 	@PostMapping
 	public ResponseEntity<Employee> insertEmployee(@RequestBody @Valid Employee employee) {
 		employee = employeeService.insertEmployee(employee);
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("{id}").buildAndExpand(employee.getId()).toUri();
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("{employeeId}").buildAndExpand(employee.getEmployeeId()).toUri();
 		return ResponseEntity.created(uri).body(employee);
 	}
 	
-	@DeleteMapping(value = "/{id}")
-	public ResponseEntity<Void> deleteEmployee(@PathVariable Long id) {
-		employeeService.deleteEmployee(id);
+	@DeleteMapping(value = "/{employeeId}")
+	public ResponseEntity<Void> deleteEmployee(@PathVariable UUID employeeId) {
+		employeeService.deleteEmployee(employeeId);
 		return ResponseEntity.noContent().build();
 	}
 	
-	@PutMapping(value = "/{id}")
-	public ResponseEntity<Employee> updateEmployee(@PathVariable Long id, @RequestBody @Valid Employee employee) {
-		employee = employeeService.updateEmployee(id, employee);
+	@PutMapping(value = "/{employeeId}")
+	public ResponseEntity<Employee> updateEmployee(@PathVariable UUID employeeId, @RequestBody @Valid Employee employee) {
+		employee = employeeService.updateEmployee(employeeId, employee);
 		return ResponseEntity.ok().body(employee);
 	}
 

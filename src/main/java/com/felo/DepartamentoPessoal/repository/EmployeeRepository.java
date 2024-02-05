@@ -1,12 +1,11 @@
 package com.felo.DepartamentoPessoal.repository;
 
-import java.util.Optional;
-
+import com.felo.DepartamentoPessoal.model.entities.Employee;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.felo.DepartamentoPessoal.model.entities.Employee;
+import java.util.Optional;
+import java.util.UUID;
 
-public interface EmployeeRepository extends JpaRepository<Employee, Long>{
+public interface EmployeeRepository extends JpaRepository<Employee, UUID>{
 
-	Optional<Employee> findById(Long id);
 }
